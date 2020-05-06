@@ -1,9 +1,30 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import App from "./App";
+import { configure, shallow } from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
+import CQ5Component from "./components/CQ5Component/CQ5Component";
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+configure({ adapter: new Adapter() });
+
+it("should render two <CQ5Component /> items", () => {
+  const wrapper = shallow(<App />);
+  expect(wrapper.find(CQ5Component)).toHaveLength(2);
+});
+
+it("should have Global Header <CQ5Component />", () => {
+  const wrapper = shallow(<App />);
+  const expectedProps = { id: "CQ5Global_header", journey: "ADDLINE" };
+
+  expect(wrapper.find(CQ5Component).first().props().cmsContext).toMatchObject(
+    expectedProps
+  );
+});
+
+it("should have Login Banner Component <CQ5Component />", () => {
+  const wrapper = shallow(<App />);
+  const expectedProps = { id: "CQ5LoginBannerComponent" };
+
+  expect(wrapper.find(CQ5Component).last().props().cmsContext).toMatchObject(
+    expectedProps
+  );
 });
