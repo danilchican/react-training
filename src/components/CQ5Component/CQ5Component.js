@@ -9,7 +9,6 @@ class CQ5Component extends Component {
 
     this.state = {
       content: null,
-      // TODO fix cmsContext
       cmsContext: {
         id: props.cmsContext.id,
         journey: "ACQUISITION",
