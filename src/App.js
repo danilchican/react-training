@@ -6,8 +6,8 @@ import CQ5Component from "./components/CQ5Component/CQ5Component";
 function App() {
   return (
     <Wrapper>
-      <CQ5Component id="CQ5Global_header" />
-      <CQ5Component id="CQ5LoginBannerComponent" />
+      <CQ5Component cmsContext={{ id: "CQ5Global_header" }} />
+      <CQ5Component cmsContext={{ id: "CQ5LoginBannerComponent" }} />
     </Wrapper>
   );
 }

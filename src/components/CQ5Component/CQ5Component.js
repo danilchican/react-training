@@ -9,7 +9,7 @@ class CQ5Component extends Component {
 
   componentWillMount() {
     axios
-      .get(`/stubs/${this.props.id}.html`)
+      .get(`/stubs/${this.props.cmsContext.id}.html`)
       .then((res) => {
         this.setState({ content: res.data });
       })
@@ -24,6 +24,7 @@ class CQ5Component extends Component {
     if (this.state.content) {
       content = (
         <div
+          id={this.props.cmsContext.id}
           dangerouslySetInnerHTML={{
             __html: this.state.content,
           }}
