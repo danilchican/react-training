@@ -8,10 +8,8 @@ class CQ5Component extends Component {
   };
 
   componentWillMount() {
-    const componentID = this.props.id;
-
     axios
-      .get("/stubs/" + componentID + ".html")
+      .get(`/stubs/${this.props.id}.html`)
       .then((res) => {
         this.setState({ content: res.data });
       })
