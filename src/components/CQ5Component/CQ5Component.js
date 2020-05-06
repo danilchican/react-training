@@ -4,15 +4,28 @@ import Wrapper from "../../hoc/Wrapper/Wrapper";
 import PropTypes from "prop-types";
 
 class CQ5Component extends Component {
-  state = {
-    content: null,
-  };
+  constructor(props) {
+    super(props);
 
-  componentWillMount() {
-    // TODO fix cmsContext
-    
+    this.state = {
+      content: null,
+      // TODO fix cmsContext
+      cmsContext: {
+        id: props.cmsContext.id,
+        journey: "ACQUISITION",
+      },
+    };
+
+    if (this.props.cmsContext.journey) {
+      this.state.cmsContext.journey = this.props.cmsContext.journey;
+    }
+  }
+
+  componentDidMount() {
     axios
-      .get(`/stubs/${this.props.cmsContext.id}.html`)
+      .get(
+        `/stubs/${this.state.cmsContext.id}.html?journey=${this.state.cmsContext.journey}`
+      )
       .then((res) => {
         this.setState({ content: res.data });
       })
@@ -27,7 +40,7 @@ class CQ5Component extends Component {
     if (this.state.content) {
       content = (
         <div
-          id={this.props.cmsContext.id}
+          id={this.state.cmsContext.id}
           dangerouslySetInnerHTML={{
             __html: this.state.content,
           }}
