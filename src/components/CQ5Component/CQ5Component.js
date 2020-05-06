@@ -24,7 +24,13 @@ class CQ5Component extends Component {
     let content = null;
 
     if (this.state.content) {
-      content = <div>{this.state.content}</div>;
+      content = (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: this.state.content,
+          }}
+        ></div>
+      );
     }
 
     return <Wrapper>{content}</Wrapper>;
