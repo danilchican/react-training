@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Wrapper from "../../hoc/Wrapper/Wrapper";
+import PropTypes from "prop-types";
 
 class CQ5Component extends Component {
   state = {
@@ -8,6 +9,8 @@ class CQ5Component extends Component {
   };
 
   componentWillMount() {
+    // TODO fix cmsContext
+    
     axios
       .get(`/stubs/${this.props.cmsContext.id}.html`)
       .then((res) => {
@@ -35,5 +38,12 @@ class CQ5Component extends Component {
     return <Wrapper>{content}</Wrapper>;
   }
 }
+
+CQ5Component.propTypes = {
+  cmsContext: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    journey: PropTypes.string,
+  }),
+};
 
 export default CQ5Component;
