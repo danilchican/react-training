@@ -8,16 +8,17 @@ describe("CMS service should work properly", () => {
     jest.clearAllMocks();
   });
 
-  it("should call BFF with proper params and custom callback is used", async () => {
+  it("should call BFF with proper params and return response", async () => {
     fetch.mockReturnValue(
       Promise.resolve(new Response("<h1>BFF response html</h1>"))
     );
 
     let response = null;
 
-    await getCMSContent("testComponentId", "TEST_JOURNEY", (content) => {
-      response = content;
-    });
+    await getCMSContent({
+      id: "testComponentId",
+      journey: "TEST_JOURNEY",
+    }).then((content) => (response = content));
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(
@@ -33,9 +34,9 @@ describe("CMS service should work properly", () => {
 
     let response = null;
 
-    await getCMSContent("testComponentId", null, (content) => {
-      response = content;
-    });
+    await getCMSContent({ id: "testComponentId" }).then(
+      (content) => (response = content)
+    );
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(
