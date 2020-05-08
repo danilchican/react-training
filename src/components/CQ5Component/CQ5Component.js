@@ -6,17 +6,18 @@ const CQ5Component = (props) => {
   const [content, setContent] = useState(null);
 
   useEffect(() => {
-    getCMSContent(props.cmsContext.id, props.cmsContext.journey, (content) => {
-      setContent(
-        <div
-          id={props.cmsContext.id}
-          dangerouslySetInnerHTML={{ __html: content }}
-        ></div>
-      );
-    });
+    getCMSContent({
+      id: props.cmsContext.id,
+      journey: props.cmsContext.journey,
+    }).then(setContent);
   }, []);
 
-  return <React.Fragment>{content}</React.Fragment>;
+  return (
+    <div
+      id={props.cmsContext.id}
+      dangerouslySetInnerHTML={{ __html: content }}
+    ></div>
+  );
 };
 
 CQ5Component.propTypes = {
