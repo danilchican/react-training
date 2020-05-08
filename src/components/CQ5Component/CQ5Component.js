@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Wrapper from "../../hoc/Wrapper/Wrapper";
 import PropTypes from "prop-types";
 import getCMSContent from "../../api/CMSService";
 
@@ -17,7 +16,7 @@ const CQ5Component = (props) => {
     });
   }, []);
 
-  return <Wrapper>{content}</Wrapper>;
+  return <React.Fragment>{content}</React.Fragment>;
 };
 
 CQ5Component.propTypes = {
