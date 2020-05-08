@@ -38,7 +38,9 @@ describe("CMS service should work properly", () => {
     });
 
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith(  "http://localhost:3000/stubs/testComponentId.html?journey=ACQUISITION" );
+    expect(fetch).toHaveBeenCalledWith(
+      "http://localhost:3000/stubs/testComponentId.html?journey=ACQUISITION"
+    );
     expect(response).toBe("<h1>BFF another response html</h1>");
   });
 });
