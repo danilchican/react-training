@@ -13,10 +13,6 @@ describe("CQ5 Component works properly", () => {
     cmsContext: { id: "CQ5Global_header", journey: "ADDLINE" },
   };
 
-  beforeEach(() => {
-    jest.spyOn(React, "useEffect").mockImplementation(React.useLayoutEffect);
-  });
-
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -32,6 +28,7 @@ describe("CQ5 Component works properly", () => {
     );
 
     const wrapper = mount(<CQ5Component {...props} />);
+    
     expect(getCMSComponent).toHaveBeenCalledTimes(1);
     expect(wrapper.props().content).toBe("<h1>BFF response html</h1>");
   });
