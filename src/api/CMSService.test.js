@@ -1,21 +1,15 @@
 import getCMSContent from "./CMSService";
+import fetchMock, { enableFetchMocks } from "jest-fetch-mock";
 
-fetch = jest.fn(() => Promise.resolve());
-// fetch = jest.fn().mockImplementationOnce(() => {
-//   return new Promise((resolve, reject) => {
-//     resolve({
-//       ok: true,
-//       status,
-//       text: () => {
-//         return 'response';
-//       },
-//     });
-//   });
-// });
+enableFetchMocks();
 
 describe("CMS service should work properly", () => {
+  beforeEach(() => {
+    fetchMock.doMock();
+  });
+
   it("should render nothing when it's fetching data", async () => {
-    // fetchMock.once("reeess");
+    fetchMock.mockOnce("response");
     let response = null;
 
     await getCMSContent("testComponentId", "TEST_JOURNEY", (content) => {
@@ -24,7 +18,6 @@ describe("CMS service should work properly", () => {
       response = content;
     });
 
-    expect(response).toEq;
     // expect(fetchMock).resolves.toBe("<h1>test response</h1>");
     // expect(fetchMock.mock.calls.length).toEqual(1)
   });
