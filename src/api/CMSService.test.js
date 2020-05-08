@@ -1,24 +1,24 @@
-import getCMSContent from "./CMSService";
-import fetchMock, { enableFetchMocks } from "jest-fetch-mock";
+jest.mock("isomorphic-fetch");
 
-enableFetchMocks();
+import getCMSContent from "./CMSService";
+import fetch from "isomorphic-fetch";
 
 describe("CMS service should work properly", () => {
-  beforeEach(() => {
-    fetchMock.doMock();
-  });
+  it("should call custom callback passed into func and return data from BFF", async () => {
+    fetch.mockReturnValue(
+      Promise.resolve(new Response("<h1>BFF response html</h1>"))
+    );
 
-  it("should render nothing when it's fetching data", async () => {
-    fetchMock.mockOnce("response");
     let response = null;
 
     await getCMSContent("testComponentId", "TEST_JOURNEY", (content) => {
-      console.log(2222);
-      console.log(content);
       response = content;
     });
 
-    // expect(fetchMock).resolves.toBe("<h1>test response</h1>");
-    // expect(fetchMock.mock.calls.length).toEqual(1)
+    expect(response).toBe("<h1>BFF response html</h1>");
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(
+      "http://localhost:3000/stubs/testComponentId.html?journey=TEST_JOURNEY"
+    );
   });
 });
