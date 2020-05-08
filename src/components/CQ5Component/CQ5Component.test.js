@@ -1,40 +1,39 @@
 import React from "react";
-import { render, configure } from "enzyme";
+import { render, configure, shallow, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import axios from "axios";
 import CQ5Component from "./CQ5Component";
 import { waitForElement } from "@testing-library/react";
+import fetchMock from "jest-fetch-mock"
 
 configure({ adapter: new Adapter() });
 
-afterEach(() => {
-  axios.get.mockClear();
-});
-
-// TODO investigate approach about using 'axios-mock-adapter' lib
-const mockCall = () => {
-  axios.get.mockResolvedValueOnce({
-    data: "<h1>Content from BFF</h1>",
+describe("CQ5 Component works properly", () => {
+  beforeEach(() => {
+    fetchMock.resetMocks();
   });
-};
 
-it("should render nothing when it's fetching data", () => {
-  mockCall();
+  it("should render nothing when it's fetching data", () => {
+    const props = {
+      cmsContext: { id: "CQ5Global_header", journey: "ADDLINE" },
+    };
 
-  const props = { cmsContext: { id: "CQ5Global_header", journey: "ADDLINE" } };
-  const wrapper = render(<CQ5Component {...props} />);
+    const wrapper = render(<CQ5Component {...props} />);
 
-  expect(wrapper.html()).toBe(null);
-});
+    expect(wrapper.html()).toBe(null);
+  });
 
-it("should render html after call to BFF", async () => {
-  mockCall();
+  it("should render html after call to BFF", async () => {
+    fetchMock.mockResponseOnce("<h1>test response</h1>");
 
-  const props = { cmsContext: { id: "CQ5Global_header", journey: "ADDLINE" } };
-  const wrapper = render(<CQ5Component {...props} />);
+    const props = {
+      cmsContext: { id: "CQ5Global_header", journey: "ADDLINE" },
+    };
+    const wrapper = shallow(<CQ5Component {...props} />);
+   
+    await expect(fetchMock.mock.calls.length).toEqual(1)
 
-  expect(axios.get).toHaveBeenCalledTimes(1);
-  expect(axios.get).toHaveBeenCalledWith(
-    "/stubs/CQ5Global_header.html?journey=ADDLINE"
-  );
+    // expect(axios.get).toHaveBeenCalledWith(
+    // "/stubs/CQ5Global_header.html?journey=ADDLINE"
+    // );
+  });
 });
