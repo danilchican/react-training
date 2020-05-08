@@ -1,23 +1,15 @@
-import React, { useEffect, useState } from "react";
-import Wrapper from "../../hoc/Wrapper/Wrapper";
 import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 import getCMSContent from "../../api/CMSService";
 
-const CQ5Component = (props) => {
+const CQ5Component = ({ cmsContext: { id, journey } }) => {
   const [content, setContent] = useState(null);
 
   useEffect(() => {
-    getCMSContent(props.cmsContext.id, props.cmsContext.journey, (content) => {
-      setContent(
-        <div
-          id={props.cmsContext.id}
-          dangerouslySetInnerHTML={{ __html: content }}
-        ></div>
-      );
-    });
+    getCMSContent({ id, journey }).then(setContent);
   }, []);
 
-  return <Wrapper>{content}</Wrapper>;
+  return <div id={id} dangerouslySetInnerHTML={{ __html: content }}></div>;
 };
 
 CQ5Component.propTypes = {
