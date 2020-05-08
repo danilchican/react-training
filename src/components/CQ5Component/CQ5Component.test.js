@@ -22,14 +22,19 @@ describe("CQ5 Component works properly", () => {
     expect(wrapper.html()).toBe("");
   });
 
-  it("should render html received by a call to BFF", () => {
+  it("should render html received by a call to BFF", async () => {
     getCMSComponent.mockReturnValue(
-      Promise.resolve(new Response("<h1>BFF response html</h1>"))
+      Promise.resolve("<h1>BFF response html</h1>")
     );
 
-    const wrapper = mount(<CQ5Component {...props} />);
-    
-    expect(getCMSComponent).toHaveBeenCalledTimes(1);
-    expect(wrapper.props().content).toBe("<h1>BFF response html</h1>");
+    let wrapper = mount(<CQ5Component {...props} />);
+    wrapper.update();
+
+    return Promise.resolve(wrapper).then(() => {
+      expect(getCMSComponent).toHaveBeenCalledTimes(1);
+      expect(wrapper.html()).toBe(
+        '<div id="CQ5Global_header"><h1>BFF response html</h1></div>'
+      );
+    });
   });
 });
