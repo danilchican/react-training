@@ -3,6 +3,7 @@ import App from "./App";
 import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import CQ5Component from "./components/CQ5Component/CQ5Component";
+import CMSContext from "./api/context/CMSContext";
 
 configure({ adapter: new Adapter() });
 
@@ -13,7 +14,7 @@ it("should render two <CQ5Component /> items", () => {
 
 it("should have Global Header <CQ5Component />", () => {
   const wrapper = shallow(<App />);
-  const expectedProps = { componentId: "CQ5Global_header", journey: "ADDLINE" };
+  const expectedProps: CMSContext = { componentId: "CQ5Global_header", journey: "ADDLINE" };
 
   expect(wrapper.find(CQ5Component).first().props().cmsContext).toMatchObject(
     expectedProps

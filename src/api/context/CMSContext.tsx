@@ -1,7 +1,10 @@
 const DEFAULT_JOURNEY = "ACQUISITION";
 
 class CMSContext {
-  constructor(componentId, journey = DEFAULT_JOURNEY) {
+  componentId: string;
+  journey?: string;
+
+  constructor(componentId: string, journey: string = DEFAULT_JOURNEY) {
     this.componentId = componentId;
     this.journey = journey;
   }

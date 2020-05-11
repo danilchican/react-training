@@ -2,6 +2,7 @@ jest.mock("isomorphic-fetch");
 
 import getCMSContent from "./CMSService";
 import fetch from "isomorphic-fetch";
+import CMSContext from "./context/CMSContext";
 
 describe("CMS service should work properly", () => {
   afterEach(() => {
@@ -9,16 +10,14 @@ describe("CMS service should work properly", () => {
   });
 
   it("should call BFF with proper params and return response", async () => {
-    fetch.mockReturnValue(
+    (fetch as jest.Mock).mockReturnValue(
       Promise.resolve(new Response("<h1>BFF response html</h1>"))
     );
 
+    const cmsContext = new CMSContext("CQ5Global_header", "TEST_JOURNEY");
     let response = null;
 
-    await getCMSContent({
-      id: "CQ5Global_header",
-      journey: "TEST_JOURNEY",
-    }).then((content) => (response = content));
+    await getCMSContent(cmsContext).then((content) => (response = content));
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(
@@ -28,15 +27,14 @@ describe("CMS service should work properly", () => {
   });
 
   it("should call BFF with default journey when such passed param is null", async () => {
-    fetch.mockReturnValue(
+    (fetch as jest.Mock).mockReturnValue(
       Promise.resolve(new Response("<h1>BFF another response html</h1>"))
     );
 
+    const cmsContext = new CMSContext("CQ5LoginBannerComponent");
     let response = null;
 
-    await getCMSContent({ id: "CQ5LoginBannerComponent" }).then(
-      (content) => (response = content)
-    );
+    await getCMSContent(cmsContext).then((content) => (response = content));
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(
