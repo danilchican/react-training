@@ -1,6 +1,6 @@
 const DEFAULT_JOURNEY = "ACQUISITION";
 
-class CMSContext {
+export default class CMSContext {
   componentId: string;
   journey?: string;
 
@@ -9,5 +9,3 @@ class CMSContext {
     this.journey = journey;
   }
 }
-
-export default CMSContext;
