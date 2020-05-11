@@ -13,7 +13,7 @@ it("should render two <CQ5Component /> items", () => {
 
 it("should have Global Header <CQ5Component />", () => {
   const wrapper = shallow(<App />);
-  const expectedProps = { id: "CQ5Global_header", journey: "ADDLINE" };
+  const expectedProps = { componentId: "CQ5Global_header", journey: "ADDLINE" };
 
   expect(wrapper.find(CQ5Component).first().props().cmsContext).toMatchObject(
     expectedProps
@@ -22,7 +22,7 @@ it("should have Global Header <CQ5Component />", () => {
 
 it("should have Login Banner Component <CQ5Component />", () => {
   const wrapper = shallow(<App />);
-  const expectedProps = { id: "CQ5LoginBannerComponent" };
+  const expectedProps = { componentId: "CQ5LoginBannerComponent" };
 
   expect(wrapper.find(CQ5Component).last().props().cmsContext).toMatchObject(
     expectedProps

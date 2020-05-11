@@ -6,15 +6,12 @@ const CQ5Component = (props) => {
   const [content, setContent] = useState(null);
 
   useEffect(() => {
-    getCMSContent({
-      id: props.cmsContext.id,
-      journey: props.cmsContext.journey,
-    }).then(setContent);
+    getCMSContent(props.cmsContext).then(setContent);
   }, []);
 
   return (
     <div
-      id={props.cmsContext.id}
+      id={props.cmsContext.componentId}
       dangerouslySetInnerHTML={{ __html: content }}
     ></div>
   );
@@ -22,7 +19,7 @@ const CQ5Component = (props) => {
 
 CQ5Component.propTypes = {
   cmsContext: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    componentId: PropTypes.string.isRequired,
     journey: PropTypes.string,
   }),
 };
