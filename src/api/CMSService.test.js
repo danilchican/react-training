@@ -16,13 +16,13 @@ describe("CMS service should work properly", () => {
     let response = null;
 
     await getCMSContent({
-      id: "testComponentId",
+      id: "CQ5Global_header",
       journey: "TEST_JOURNEY",
     }).then((content) => (response = content));
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(
-      "http://localhost:3000/stubs/testComponentId.html?journey=TEST_JOURNEY"
+      "http://localhost:18080/content/ee-shop/consumer/personalization/l0/product/watch/_jcr_content/slot-one-par.html?journey=TEST_JOURNEY"
     );
     expect(response).toBe("<h1>BFF response html</h1>");
   });
@@ -34,13 +34,13 @@ describe("CMS service should work properly", () => {
 
     let response = null;
 
-    await getCMSContent({ id: "testComponentId" }).then(
+    await getCMSContent({ id: "CQ5LoginBannerComponent" }).then(
       (content) => (response = content)
     );
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(
-      "http://localhost:3000/stubs/testComponentId.html?journey=ACQUISITION"
+      "http://localhost:18080/content/ee-shop/consumer/personalization/l0/product/watch/_jcr_content/slot-two-par.html?journey=ACQUISITION"
     );
     expect(response).toBe("<h1>BFF another response html</h1>");
   });
