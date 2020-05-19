@@ -1,8 +1,8 @@
 jest.mock("isomorphic-fetch");
 
-import getCMSContent from "./CMSService";
+import getCMSContent from "./CmsService";
 import fetch from "isomorphic-fetch";
-import CMSContext from "./context/CMSContext";
+import { CmsContext } from "./context/CmsContext";
 
 describe("CMS service should work properly", () => {
   afterEach(() => {
@@ -14,7 +14,7 @@ describe("CMS service should work properly", () => {
       Promise.resolve(new Response("<h1>BFF response html</h1>"))
     );
 
-    const cmsContext = new CMSContext("CQ5Global_header", "TEST_JOURNEY");
+    const cmsContext = new CmsContext("CQ5Global_header", "TEST_JOURNEY");
     let response = null;
 
     await getCMSContent(cmsContext).then((content) => (response = content));
@@ -31,7 +31,7 @@ describe("CMS service should work properly", () => {
       Promise.resolve(new Response("<h1>BFF another response html</h1>"))
     );
 
-    const cmsContext = new CMSContext("CQ5LoginBannerComponent");
+    const cmsContext = new CmsContext("CQ5LoginBannerComponent");
     let response = null;
 
     await getCMSContent(cmsContext).then((content) => (response = content));

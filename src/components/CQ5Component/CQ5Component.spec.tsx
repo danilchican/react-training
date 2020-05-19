@@ -1,17 +1,17 @@
-jest.mock("../../api/CMSService");
+jest.mock("../../api/CmsService");
 
 import React from "react";
 import { render, configure, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import CQ5Component from "./CQ5Component";
-import getCMSComponent from "../../api/CMSService";
-import CMSContext from "../../api/context/CMSContext";
+import getCMSComponent from "../../api/CmsService";
+import {CmsContext} from "../../api/context/CmsContext";
 
 configure({ adapter: new Adapter() });
 
 describe("CQ5 Component works properly", () => {
   let props = {
-    cmsContext: new CMSContext("CQ5Global_header", "ADDLINE"),
+    cmsContext: new CmsContext("CQ5Global_header", "ADDLINE"),
   };
 
   afterEach(() => {

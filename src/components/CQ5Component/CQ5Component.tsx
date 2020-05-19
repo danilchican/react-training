@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import getCMSContent from "../../api/CMSService";
+import getCMSComponent from "../../api/CmsService";
+import { CmsContext } from "../../api/context/CmsContext";
 
-const CQ5Component = (props: any) => {
+type ComponentProps = {
+  cmsContext: CmsContext
+}
+
+const CQ5Component = (props: ComponentProps) => {
   const [content, setContent]: any = useState(null);
 
   useEffect(() => {
-    getCMSContent(props.cmsContext).then(setContent);
+    getCMSComponent(props.cmsContext).then(setContent);
   }, []);
 
   return (

@@ -1,5 +1,5 @@
 import fetch from "isomorphic-fetch";
-import CMSContext from "./context/CMSContext";
+import { CmsContext } from "./context/CmsContext";
 
 type mapping = {
   [key: string]: string
@@ -12,10 +12,13 @@ const componentsToURLsMapping: mapping = {
     "content/ee-shop/consumer/personalization/l0/product/watch/_jcr_content/slot-two-par.html",
 };
 
-const getCMSComponent = async (cmsContext: CMSContext) => {
+const getCMSComponent = async (cmsContext: CmsContext) => {
   try {
-    const componentUrl: any = componentsToURLsMapping[cmsContext.componentId];
-    const url = `http://localhost:18080/${componentUrl}?journey=${cmsContext.journey}`;
+    const { componentId, journey } = cmsContext;
+    let queryParams = Object.entries(cmsContext).map(([key, val]) => `${key}=${val}`).join('&');
+
+    const componentUrl: any = componentsToURLsMapping[componentId];
+    const url = `${process.env.REACT_APP_CMS_ENDPOINT_URL}/${componentUrl}?${queryParams}`;
 
     const response = await fetch(url);
     const content = await response.text();
